@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name         Client Bot
 // @namespace    Client Bot
-// @version      1.3
-// @downloadURL  http://5.249.145.106/Client.js
-// @updateURL    http://5.249.145.106/Client.js
-// @description  sharkbot for agar.io
+// @version      1.8
+// @downloadURL  http://51.254.143.115/Client.js
+// @updateURL    http://51.254.143.115/Client.js
+// @description  AgarHelper.com
 // @author       Code Denis Kolsanov, Changes Kriss
 // @include      http://agar.io/
 // @grant        none
-// ==/UserScript==
+// ==/UserScript== 
+
 var el = document.getElementById( 'adbg' );
 el.parentNode.removeChild( el );
 var Version = GM_info.script.version;
@@ -55,14 +56,11 @@ bgmusic.play();
 $.getScript("https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js");
 $.getScript("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js");
 
-if( "local" === "loca" ){
-    window.serverip = "localhost:8080";
-} else {
-    window.serverip = "5.249.145.106:8080";
-}
+
+window.serverip = "51.254.143.115:8080";
 
 function base64_encode( data ) {
-  var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var o1, o2, o3, h1, h2, h3, h4, bits, i=0, enc='';
   do {
     o1 = data.charCodeAt(i++);
@@ -158,6 +156,7 @@ var main = (function(d, e) {
             109 != n.keyCode || voldown();
             107 != n.keyCode || volup();
             221 != n.keyCode || nextmusic();
+			69 != n.keyCode || split();
             27 == n.keyCode && pa(300)
         };
         d.onkeyup = function(n) {
@@ -180,7 +179,11 @@ var main = (function(d, e) {
         hb();
         d.location.hash && 6 <= d.location.hash.length && kb(d.location.hash)
     }
-    
+    function split()
+	{
+		if (window.connected)
+			window.server.send( JSON.stringify({ type : "split", key : window.localStorage["login"]}) );
+	}
     function voldown()
     {
        var now = bgmusic.volume;
@@ -767,6 +770,7 @@ var main = (function(d, e) {
         A && A.width && f.drawImage(A, h - A.width - 10, 10);
         P = Math.max(P, Db());
         var text = "<img src='http://ddsdogtraining.com/images/icons/ribbons/third-place.png'> Score: " + ~~(Db() / 100) 
+        + "<br>" + "<img src='http://ddsdogtraining.com/images/icons/ribbons/third-place.png'> Hight score: " + ~~(P / 100)
         + "<br>" + " <img src='https://greasyfork.org/images/circle-red.png'> Bots: "+window.connectedBots 
         + "<br><img src='https://www.lauyan.com/en/_media/img/sq_icon/countdown-icon.png'> " + window.time 
         + "<br><img src='http://www.icon2s.com/img16/16x16-black-white-metro-mouse-icon.png'> " + "Fallow to mouse: "+window.followMouse
